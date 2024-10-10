@@ -1,8 +1,8 @@
-// import { Router } from "express";
-// import { fetchAndSaveCryptoData } from "../controllers/crypto.controllers.js";
+import { Router } from "express";
+import { getCryptoStats } from "../controllers/crypto.controllers.js";
 
-// const router = Router();
+const router = Router();
 
-// router.route("/fetch_and_save_crypto_data").post(fetchAndSaveCryptoData);
+router.route("/stats").post(getCryptoStats);
 
-// export default router;
+export default router;

@@ -2,6 +2,8 @@ import axios from "axios";
 import { Crypto } from "../models/crypto.models.js";
 import { COIN_GECKO_API_URL, VS_CURRENCY, IDS } from "../constants.js";
 import errorHandler from "../utils/errorHandler.js";
+import asyncHandler from "../utils/asyncHandler.js";
+import responseHandler from "../utils/responseHandler.js";
 
 // CRON JOB CONTROLLER
 const cronFetchAndSaveCryptoData = async () => {
@@ -40,6 +42,40 @@ const cronFetchAndSaveCryptoData = async () => {
   }
 };
 
+const getCryptoStats = asyncHandler(async (req, res, next) => {
+  const { coin } = req.body;
 
+  if (!coin) {
+    return next(new errorHandler(400, "Coin parameter is missing"));
+  }
+  const lowerCaseCoin = coin.toLowerCase();
 
-export { cronFetchAndSaveCryptoData };
+  const result = await Crypto.aggregate([
+    {
+      $match: { crypto_id: lowerCaseCoin },
+    },
+    {
+      $sort: { created_at: -1 },
+    },
+    {
+      $limit: 1,
+    },
+    {
+      $project: {
+        _id: 0,
+        price: 1,
+        marketCap: 1,
+        change24h: 1,
+      },
+    },
+  ]);
+
+  if (!result || result.length === 0) {
+    return next(new errorHandler(404, `No data found for the coin: ${coin}`));
+  }
+  res
+    .status(200)
+    .json(new responseHandler(200, "Latest data fetched", result[0]));
+});
+
+export { cronFetchAndSaveCryptoData, getCryptoStats };
