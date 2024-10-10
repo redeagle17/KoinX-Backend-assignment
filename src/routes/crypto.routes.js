@@ -3,7 +3,7 @@ import { getCryptoStats, getCryptoPriceStandardDeviation } from "../controllers/
 
 const router = Router();
 
-router.route("/stats").post(getCryptoStats);
-router.route("/deviation").post(getCryptoPriceStandardDeviation);
+router.route("/stats").get(getCryptoStats);
+router.route("/deviation").get(getCryptoPriceStandardDeviation);
 
 export default router;
