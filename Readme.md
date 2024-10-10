@@ -12,9 +12,8 @@ This project implements a backend service for cryptocurrency using Node.js, Expr
 
 ### Get stats
 
-```http
   GET https://koin-x-backend-assignment-ankur-singhs-projects-b0407e94.vercel.app/api/v1/crypto/stats
-  
+```
   BODY 
   {
     "coin":"your_coin_name"
@@ -25,9 +24,8 @@ This project implements a backend service for cryptocurrency using Node.js, Expr
 
 ### Get deviation
 
-```http
   GET https://koin-x-backend-assignment-ankur-singhs-projects-b0407e94.vercel.app/api/v1/crypto/deviation
-
+```
   BODY 
   {
     "coin":"your_coin_name"
