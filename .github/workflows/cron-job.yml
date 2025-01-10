@@ -1,0 +1,26 @@
+name: Cron Job for Vercel Controller
+
+on:
+  schedule:
+    - cron: "*/2 * * * *"
+
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for manual trigger"
+        required: false
+
+jobs:
+  trigger-vercel-api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Trigger Vercel API Endpoint
+      env:
+        VERCE_DEPLOYED_API_URL: https://koinx-b-ankur-singhs-projects-b0407e94.vercel.app
+      run: |
+        curl -X GET "https://koinx-b-ankur-singhs-projects-b0407e94.vercel.app/api/v1/crypto/fetch_save_data" \
+        -H "Content-Type: application/json"
