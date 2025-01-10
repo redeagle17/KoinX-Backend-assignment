@@ -1,7 +1,7 @@
 import "dotenv/config";
 import connectDB from "./db/index.js";
 import app from "./app.js";
-import "../api/cron.js";
+import "./utils/cron.js";
 
 connectDB()
   .then(() => {
