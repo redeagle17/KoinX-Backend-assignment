@@ -1,7 +1,7 @@
 import "dotenv/config";
 import connectDB from "./db/index.js";
 import app from "./app.js";
-import './utils/cron.js';
+import "../api/cron.js";
 
 connectDB()
   .then(() => {
@@ -12,3 +12,4 @@ connectDB()
   .catch((error) => {
     console.log("MONGODB connection failed", error);
   });
+  
